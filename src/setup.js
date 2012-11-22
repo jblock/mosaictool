@@ -4,7 +4,7 @@ $(function() {
 
 	Backbone.emulateJSON = true;
 
-	App.layers = new App.Layers();
+	App._layers = new App.Layers;
 
 	App.main = new App.AppView;
 

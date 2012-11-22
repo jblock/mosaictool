@@ -4,10 +4,7 @@ App.AppView = Backbone.View.extend({
 	el: "body",
 
 	initialize: function() {
-
-		App.layers.bind('add', this.addLayer);
-		App.layers.bind('change', this.drawLayers);
-
+		App._layers.bind('change', this.changedModel, this);
 		this.render();
 	},
 
@@ -16,14 +13,27 @@ App.AppView = Backbone.View.extend({
 	},
 
 	render: function() {
-		console.log("AppView Rendered");
+		$(this.el).html(JST['main']());
+		Utils.c.log("AppView Rendered");
+
+		this.layerList = new App.LayerListView();
+		this.layerListOptions = new App.LayerListOptionsView();
+
+		this.buildLayerList();
 	},
 
 	makeNewLayer: function() {
-		var newView = new App.LayerView();
-		newView.render();
-		console.log(newView.el);
-		$('#layers').append(newView.el);
+		App._layers.add(new App.Layer);
+	},
+
+	buildLayerList: function() {
+		$('#leftPane')
+			.append(this.layerListOptions.el)
+			.append(this.layerList.el);
+	},
+
+	changedModel: function(layer) {
+		Utils.c.log("Updated Layer Name");
 	}
 
 });
