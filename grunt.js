@@ -15,13 +15,13 @@ module.exports = function(grunt) {
     },
     concat: {
       lib: {
-        src: '<config:lint.files>',
+        src: ['<config:lint.files>'],
         dest: 'lib/app.js'
       }
     },
     min: {
       lib: {
-        src: ['lib/app.js'],
+        src: ['<banner>','lib/app.js'],
         dest: 'lib/app.min.js'
       }
     },
