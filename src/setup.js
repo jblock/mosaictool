@@ -4,6 +4,8 @@ $(function() {
 
 	Backbone.emulateJSON = true;
 
-	Utils.c.log("poop");
+	App.layers = new App.Layers();
+
+	App.main = new App.AppView;
 
 });
