@@ -16,10 +16,14 @@ App.AppView = Backbone.View.extend({
 		$(this.el).html(JST['main']());
 		Utils.c.log("AppView Rendered");
 
-		this.layerList = new App.LayerListView();
-		this.layerListOptions = new App.LayerListOptionsView();
+		this.layerList = new App.LayerListView;
+		this.layerListOptions = new App.LayerListOptionsView;
+
+		this.canvasView = new App.CanvasView;
 
 		this.buildLayerList();
+
+		this.buildCanvas();
 	},
 
 	makeNewLayer: function() {
@@ -32,8 +36,13 @@ App.AppView = Backbone.View.extend({
 			.append(this.layerList.el);
 	},
 
+	buildCanvas: function() {
+		$('#rightPane')
+			.append(this.canvasView.el);
+	},
+
 	changedModel: function(layer) {
-		Utils.c.log("Updated Layer Name");
+		
 	}
 
 });
