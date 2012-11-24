@@ -25,7 +25,6 @@ App.AppView = Backbone.View.extend({
 
 		this.layerList.setElement($('#layers')).render();
 		this.layerListOptions.setElement($('#mainMenu')).render();
-		this.canvasView.setElement($('#canvasPane')).render();
 
 		this.img.on('img:loaded',this.buildCanvas,this);
 	},
@@ -40,6 +39,11 @@ App.AppView = Backbone.View.extend({
 
 	changedImage: function(imageSource) {
 
+	},
+
+	buildCanvas: function() {
+		Utils.c.log("Trigger received. image loaded.")
+		this.canvasView.setElement($('#canvasPane')).render();
 	}
 
 });

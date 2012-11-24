@@ -398,6 +398,10 @@ table {
   display: table-cell;
 }
 
+.invis {
+  display: none;
+}
+
 .btn {
   background: rgba(165,202,216,.8);
   border: 1px solid black;
@@ -541,6 +545,13 @@ body {
   width: 100%;
   display: block;
   position: relative;
+}
+
+#shapeCanvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9999;
 }
 
 #imageSource {

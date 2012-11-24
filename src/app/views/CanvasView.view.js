@@ -12,6 +12,8 @@ App.CanvasView = Backbone.View.extend({
 	render: function() {
 		this.$el.html(JST['canvas']());
 
+		this.edit.setDimensions(this.$el.width(),this.$el.height());
+
 		this.menu.setElement($('#canvasMenu')).render();
 		this.edit.setElement($('#mainCanvas')).render();
 
