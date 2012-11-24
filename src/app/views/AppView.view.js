@@ -4,7 +4,14 @@ App.AppView = Backbone.View.extend({
 	el: "body",
 
 	initialize: function() {
-		App._layers.bind('change', this.changedModel, this);
+		this.img = new App.ImageSource;
+		this.img.bind('change', this.changedImage, this);
+		App._layers.bind('change', this.changedLayers, this);
+
+		this.layerList = new App.LayerListView;
+		this.layerListOptions = new App.LayerListOptionsView;
+		this.canvasView = new App.CanvasView({model: this.img});
+
 		this.render();
 	},
 
@@ -16,33 +23,23 @@ App.AppView = Backbone.View.extend({
 		$(this.el).html(JST['main']());
 		Utils.c.log("AppView Rendered");
 
-		this.layerList = new App.LayerListView;
-		this.layerListOptions = new App.LayerListOptionsView;
+		this.layerList.setElement($('#layers')).render();
+		this.layerListOptions.setElement($('#mainMenu')).render();
+		this.canvasView.setElement($('#canvasPane')).render();
 
-		this.canvasView = new App.CanvasView;
-
-		this.buildLayerList();
-
-		this.buildCanvas();
+		this.img.on('img:loaded',this.buildCanvas,this);
 	},
 
 	makeNewLayer: function() {
 		App._layers.add(new App.Layer);
 	},
 
-	buildLayerList: function() {
-		$('#leftPane')
-			.append(this.layerListOptions.el)
-			.append(this.layerList.el);
-	},
-
-	buildCanvas: function() {
-		$('#rightPane')
-			.append(this.canvasView.el);
-	},
-
-	changedModel: function(layer) {
+	changedLayers: function(layer) {
 		
+	},
+
+	changedImage: function(imageSource) {
+
 	}
 
 });

@@ -1,12 +1,13 @@
 App.LayerListOptionsView = Backbone.View.extend({
 
-	id: 'mainMenu',
+	// id: 'mainMenu',
 
 	initialize: function() {
-		this.render();
+		// this.render();
 	},
 
 	render: function() {
 		$(this.el).html(JST['layers/list/menu']());
+		return this;
 	}
 });

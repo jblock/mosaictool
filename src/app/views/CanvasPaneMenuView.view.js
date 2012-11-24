@@ -1,14 +1,16 @@
 App.CanvasPaneMenuView = Backbone.View.extend({
 
-	id: 'canvasMenu',
+	// id: 'canvasMenu',
 
 	initialize: function() {
-		this.render();
+
+		// this.render();
 	},
 
 	render: function() {
 		Utils.c.log("rendered menu")
-		$(this.el).html(JST['canvas/menu']());
+		this.$el.html(JST['canvas/menu']());
+		return this;
 	}
 
 });

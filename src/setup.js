@@ -1,6 +1,7 @@
 $(function() {
 
 	Utils.c = window.console || function() {};
+	App.window = $(window);
 
 	Backbone.emulateJSON = true;
 

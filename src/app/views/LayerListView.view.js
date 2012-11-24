@@ -1,7 +1,5 @@
 App.LayerListView = Backbone.View.extend({
 
-	id: "layers",
-
 	initialize: function() {
 		App._layers.bind('add',this.addLayer,this);
 		this.render();
@@ -9,6 +7,7 @@ App.LayerListView = Backbone.View.extend({
 
 	render: function() {
 		console.log("Rendered LayerListView");
+		return this;
 	},
 
 	addLayer: function(layer) {

@@ -1,19 +1,22 @@
 App.CanvasView = Backbone.View.extend({
 
-	id: 'canvasPane',
+	// id: 'canvasPane',
 
 	initialize: function() {
 		Utils.c.log('initialized CanvasView');
-		this.render();
+		this.menu = new App.CanvasPaneMenuView({model: this.model});
+		this.edit = new App.CanvasEditView({model: this.model});
+		// this.render();
 	},
 
 	render: function() {
-		this.menu = new App.CanvasPaneMenuView;
-		this.edit = new App.CanvasEditView;
+		this.$el.html(JST['canvas']());
 
-		$(this.el)
-			.append(this.menu.el)
-			.append(this.edit.el);
+		this.menu.setElement($('#canvasMenu')).render();
+		this.edit.setElement($('#mainCanvas')).render();
+
+		return this;
+
 	}
 
 });

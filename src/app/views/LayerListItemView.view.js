@@ -18,6 +18,7 @@ App.LayerListItemView = Backbone.View.extend({
 		$(this.el).html(JST['layers/layer']({
 			name: this.model.get('name')
 		}));
+		return this;
 	},
 
 	updateName: function(e) {
