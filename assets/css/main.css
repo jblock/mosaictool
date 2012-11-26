@@ -477,6 +477,7 @@ body {
 }
 
 .layer {
+  opacity: 0.3;
   display: block;
   background: #333;
   box-shadow: 0 1px 2px black;
@@ -496,6 +497,10 @@ body {
   background: #544;
 }
 
+.layer.visible {
+  opacity: 1;
+}
+
 .layer .name {
   font-weight: bold;
   display: inline;
@@ -512,7 +517,7 @@ body {
   -webkit-transition: all .05s ease-in-out;
 }
 
-.deleteLayer {
+.layerButton {
   display: inline-block;
   width: 12px;
   height: 12px;

@@ -11,11 +11,11 @@ window.JST['main'] = _.template(
 );
 
 window.JST['layers/list/menu'] = _.template(
-		'<a href="#" class="btn createNewLayer">New Layer</a>'
+	'<a href="#" class="btn createNewLayer">New Layer</a>'
 );
 
 window.JST['layers/layer'] = _.template(
-	'<div class="layer-inner"><a href="#" class="deleteLayer" /><span contenteditable="false" class="name"><%= name %></span></div>'
+	'<div class="layer-inner"><a href="#" class="layerButton deleteLayer" /><a href="#" class="layerButton toggleVisible" /><span contenteditable="false" class="name"><%= name %></span></div>'
 );
 
 window.JST['canvas'] = _.template(

@@ -5,7 +5,8 @@ App.LayerListItemView = Backbone.View.extend({
 		'click .name': 'editName',
 		'blur .name': 'finishEditName',
 		'click .layer-inner': 'toggleFocus',
-		'click .deleteLayer': 'deleteLayer'
+		'click .deleteLayer': 'deleteLayer',
+		'click .toggleVisible': 'toggleVisible'
 	},
 
 	initialize: function() {
@@ -18,6 +19,7 @@ App.LayerListItemView = Backbone.View.extend({
 		$(this.el).html(JST['layers/layer']({
 			name: this.model.get('name')
 		}));
+		this.updateDisplay();
 		return this;
 	},
 
@@ -29,10 +31,13 @@ App.LayerListItemView = Backbone.View.extend({
 	},
 
 	updateDisplay: function() {
-		if (this.model.get('selected')) {
-			$(this.el).addClass('selected');
-		} else {
-			$(this.el).removeClass('selected');
+		var classes = ['selected', 'visible'];
+		for (var i = 0; i < classes.length; i++) {
+			if (this.model.get(classes[i])) {
+				$(this.el).addClass(classes[i]);
+			} else {
+				$(this.el).removeClass(classes[i]);
+			}
 		}
 	},
 
@@ -67,6 +72,13 @@ App.LayerListItemView = Backbone.View.extend({
 		} else {
 			this.model.set('selected', false);
 		}
+	},
+
+	toggleVisible: function(e) {
+		Utils.c.log("Toggled Visible");
+		e.stopPropagation();
+		this.model.toggleVisible();
+		Utils.c.log(this.model.get('visible'));
 	}
 
 });
