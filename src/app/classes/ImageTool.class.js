@@ -5,6 +5,12 @@ App.ImageTool = (function() {
 		this.ctx = this.canvas.getContext('2d');
 		this.image = model;
 		this.imageData = this.image.getImageData();
+
+		this.buffer = document.createElement('canvas');
+		this.buffer.width = this.canvas.width;
+		this.buffer.height = this.canvas.height;
+		this.bufferCtx = this.buffer.getContext('2d');
+
 		window['test'] = this;
 		Utils.c.log(this);
 	}
@@ -17,7 +23,10 @@ App.ImageTool = (function() {
 
 	ImageTool.prototype.draw = function() {
 		Utils.c.log("--> ImageTool Redraw");
-		this.ctx.drawImage(this.image.get('img'),0,0,this.canvas.width, this.canvas.height);		
+		this.buffer.width = this.canvas.width;
+		this.buffer.height = this.canvas.height;
+		this.bufferCtx.clearRect(0,0,this.buffer.width,this.buffer.height);
+		this.bufferCtx.drawImage(this.image.get('img'),0,0,this.canvas.width, this.canvas.height);		
 		var _self = this;
 		App._layers.each(function(layer) {
 			if (layer.get('visible')) {
@@ -36,20 +45,23 @@ App.ImageTool = (function() {
 								disp = i % 2 === 0 ? radius : 0;
 								cenX = _self.round(i*(radius+hs));
 								cenY = _self.round(disp+2*j*(radius+vs));
-								_self.ctx.fillStyle = _self.getChunkColor(cenX, cenY, op);
-								_self.ctx.beginPath();
-								_self.ctx.moveTo(cenX, cenY - radius);
-								_self.ctx.lineTo(cenX + radius, cenY);
-								_self.ctx.lineTo(cenX, cenY + radius);
-								_self.ctx.lineTo(cenX - radius, cenY);
-								_self.ctx.closePath();
-								_self.ctx.fill();
+								_self.bufferCtx.fillStyle = _self.getChunkColor(cenX, cenY, op);
+								_self.bufferCtx.beginPath();
+								_self.bufferCtx.moveTo(cenX, cenY - radius);
+								_self.bufferCtx.lineTo(cenX + radius, cenY);
+								_self.bufferCtx.lineTo(cenX, cenY + radius);
+								_self.bufferCtx.lineTo(cenX - radius, cenY);
+								_self.bufferCtx.closePath();
+								_self.bufferCtx.fill();
 							}
 						}
 						break;
 				}
 			}
 		});
+		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+		Utils.c.log(this.bufferCtx);
+		this.ctx.drawImage(this.buffer,0,0);
 	}
 
 	ImageTool.prototype.getChunkColor = function(canvasX, canvasY, alpha) {
