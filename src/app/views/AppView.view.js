@@ -26,17 +26,19 @@ App.AppView = Backbone.View.extend({
 		this.layerList.setElement($('#layers')).render();
 		this.layerListOptions.setElement($('#mainMenu')).render();
 
-		this.makeNewLayer();
-
 		this.img.on('img:loaded',this.buildCanvas,this);
 	},
 
 	makeNewLayer: function() {
-		App._layers.add(new App.Layer);
+		var layer = new App.Layer;
+		App._layers.add(layer);
+		if (App._layers.size() === 1) {
+			App._layers.trigger('selected:layer', layer);
+		}
 	},
 
 	changedLayers: function(layer) {
-		
+		// Utils.c.log(App._layers.getSelected());
 	},
 
 	changedImage: function(imageSource) {
@@ -44,8 +46,9 @@ App.AppView = Backbone.View.extend({
 	},
 
 	buildCanvas: function() {
-		Utils.c.log("Trigger received. image loaded.")
+		Utils.c.log("Trigger received. image loaded.");
 		this.canvasView.setElement($('#canvasPane')).render();
+		this.makeNewLayer();
 	}
 
 });

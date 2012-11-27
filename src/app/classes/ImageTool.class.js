@@ -7,12 +7,12 @@ App.ImageTool = (function() {
 		this.imageData = this.image.getImageData();
 
 		this.buffer = document.createElement('canvas');
+		this.bufferCtx = this.buffer.getContext('2d');
+	}
+
+	ImageTool.prototype.setBuffer = function() {
 		this.buffer.width = this.canvas.width;
 		this.buffer.height = this.canvas.height;
-		this.bufferCtx = this.buffer.getContext('2d');
-
-		window['test'] = this;
-		Utils.c.log(this);
 	}
 
 	ImageTool.prototype.round = function(num) {
@@ -23,45 +23,70 @@ App.ImageTool = (function() {
 
 	ImageTool.prototype.draw = function() {
 		Utils.c.log("--> ImageTool Redraw");
-		this.buffer.width = this.canvas.width;
-		this.buffer.height = this.canvas.height;
+		this.setBuffer();
 		this.bufferCtx.clearRect(0,0,this.buffer.width,this.buffer.height);
 		this.bufferCtx.drawImage(this.image.get('img'),0,0,this.canvas.width, this.canvas.height);		
-		var _self = this;
+		var i, j, cenX, cenY, numH, numV, _self = this;
 		App._layers.each(function(layer) {
 			if (layer.get('visible')) {
 				switch(layer.get('type')) {
-					case "diamond":
-						var cenX, cenY, disp,
-								radius = layer.get('instructions').diamond.radius,
-								hs = layer.get('instructions').diamond.spacing.horizontal,
-								vs = layer.get('instructions').diamond.spacing.vertical,
-								op = layer.get('instructions').diamond.opacity,
-								numH = _self.canvas.width / (radius + hs),
-								numV = _self.canvas.height / (2 * radius + vs);
-
-						for (var i = 0; i <= numH; i++) {
-							for (var j = 0; j <= numV; j++) {
-								disp = i % 2 === 0 ? radius : 0;
-								cenX = _self.round(i*(radius+hs));
-								cenY = _self.round(disp+2*j*(radius+vs));
-								_self.bufferCtx.fillStyle = _self.getChunkColor(cenX, cenY, op);
-								_self.bufferCtx.beginPath();
-								_self.bufferCtx.moveTo(cenX, cenY - radius);
-								_self.bufferCtx.lineTo(cenX + radius, cenY);
-								_self.bufferCtx.lineTo(cenX, cenY + radius);
-								_self.bufferCtx.lineTo(cenX - radius, cenY);
-								_self.bufferCtx.closePath();
-								_self.bufferCtx.fill();
+					case "circles":
+						var radius = layer.get('instructions').circles.radius,
+								hs = layer.get('instructions').circles.spacing.horizontal,
+								vs = layer.get('instructions').circles.spacing.vertical;
+						numH = _self.canvas.width / (2 * (radius + hs));
+						numV = _self.canvas.height / (2 * (radius + vs));
+						for (i = 0; i <= numH; i++) {
+							for (j = 0; j <= numV; j++) {
+								cenX = _self.round(2*i*(radius+hs));
+								cenY = _self.round((i % 2 === 0 ? radius : 0)+2*j*(radius+vs));
+								_self.drawCircle(cenX, cenY, radius, layer.get('instructions').circles.opacity);
 							}
 						}
+						break;
+					case "squares":
+
+					break;
+					case "diamond":
+						var radius = layer.get('instructions').diamond.radius,
+								hs = layer.get('instructions').diamond.spacing.horizontal,
+								vs = layer.get('instructions').diamond.spacing.vertical;
+						numH = _self.canvas.width / (radius + hs),
+						numV = _self.canvas.height / (2 * (radius + vs));
+
+						for (i = 0; i <= numH; i++) {
+							for (j = 0; j <= numV; j++) {
+								cenX = _self.round(i*(radius+hs));
+								cenY = _self.round((i % 2 === 0 ? radius : 0)+2*j*(radius+vs));
+								_self.drawDiamond(cenX, cenY, radius, layer.get('instructions').diamond.opacity);
+							}
+						}
+
 						break;
 				}
 			}
 		});
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-		Utils.c.log(this.bufferCtx);
 		this.ctx.drawImage(this.buffer,0,0);
+	}
+
+	ImageTool.prototype.drawCircle = function(cenX, cenY, radius, opacity) {
+		this.bufferCtx.fillStyle = this.getChunkColor(cenX, cenY, opacity);
+		this.bufferCtx.beginPath();
+		this.bufferCtx.arc(cenX, cenY, radius, 0, Math.PI*2, this);
+		this.bufferCtx.closePath();
+		this.bufferCtx.fill();
+	}
+
+	ImageTool.prototype.drawDiamond = function(cenX, cenY, radius, opacity) {
+		this.bufferCtx.fillStyle = this.getChunkColor(cenX, cenY, opacity);
+		this.bufferCtx.beginPath();
+		this.bufferCtx.moveTo(cenX, cenY - radius);
+		this.bufferCtx.lineTo(cenX + radius, cenY);
+		this.bufferCtx.lineTo(cenX, cenY + radius);
+		this.bufferCtx.lineTo(cenX - radius, cenY);
+		this.bufferCtx.closePath();
+		this.bufferCtx.fill();
 	}
 
 	ImageTool.prototype.getChunkColor = function(canvasX, canvasY, alpha) {

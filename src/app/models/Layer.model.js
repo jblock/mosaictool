@@ -19,7 +19,7 @@ App.Layer = Backbone.Model.extend({
 					horizontal: 0,
 					vertical: 0
 				},
-				opacity: 1.0
+				opacity: 1
 			},
 			squares: {
 				side: 10,

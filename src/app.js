@@ -29,3 +29,17 @@ window.JST['canvas/menu'] = _.template(
 window.JST['canvas/edit'] = _.template(
 	'<canvas id="imageSource"></canvas>'
 );
+
+window.JST['canvas/menu/diamond'] = _.template(
+	'<select id="type">'+
+		'<option value="diamond" selected>diamond</option><option value="circles">circles</option><option value="squares">squares</option>'+
+		'</select><label for="opacity">Opacity: </label><input id="opacity" value="<%= opacity %>" type="text"></input>'
+);
+
+window.JST['canvas/menu/circles'] = _.template(
+	'<select id="type"><option value="diamond">diamond</option><option value="circles" selected>circles</option><option value="squares">squares</option></select>'
+);
+
+window.JST['canvas/menu/squares'] = _.template(
+	'<select id="type"><option value="diamond">diamond</option><option value="circles">circles</option><option value="squares" selected>squares</option></select>'
+);
