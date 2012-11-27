@@ -27,5 +27,5 @@ window.JST['canvas/menu'] = _.template(
 );
 
 window.JST['canvas/edit'] = _.template(
-	'<canvas id="shapeCanvas"></canvas><canvas id="imageSource"></canvas>'
+	'<canvas id="imageSource"></canvas>'
 );

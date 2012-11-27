@@ -26,6 +26,8 @@ App.AppView = Backbone.View.extend({
 		this.layerList.setElement($('#layers')).render();
 		this.layerListOptions.setElement($('#mainMenu')).render();
 
+		this.makeNewLayer();
+
 		this.img.on('img:loaded',this.buildCanvas,this);
 	},
 

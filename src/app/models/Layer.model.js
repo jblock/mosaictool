@@ -3,7 +3,34 @@ App.Layer = Backbone.Model.extend({
 	defaults: {
 		name: "New Layer",
 		orderId: 0,
-		shapes: [],
+		type: 'diamond',
+		instructions: {
+			diamond: {
+				radius: 5,
+				spacing: {
+					horizontal: 0,
+					vertical: 0
+				},
+				opacity: 0.6
+			},
+			circles: {
+				radius: 5,
+				spacing: {
+					horizontal: 0,
+					vertical: 0
+				},
+				opacity: 1.0
+			},
+			squares: {
+				side: 10,
+				spacing: {
+					horizontal: 0,
+					vertical: 0
+				},
+				stagger: 0,
+				opacity: 1.0
+			}
+		},
 		selected: false,
 		visible: true
 	},
@@ -27,5 +54,5 @@ App.Layer = Backbone.Model.extend({
 	toggleVisible: function() {
 		this.set('visible', !this.get('visible'));
 	}
-	
+
 });
