@@ -27,8 +27,22 @@ if (!window.cancelAnimationFrame)
 
 $(function() {
 
-	Utils.c = window.console || function() {};
+    App.DEBUG = true;
+
+    if (App.DEBUG) {
+        Utils.c = window.console || {};
+    } else {
+        Utils.c = {};
+        Utils.c.log = function(args) {
+            return false;
+        }
+    }
+
 	App.window = $(window);
+
+    App.isSafari = navigator.userAgent.toLowerCase().indexOf('safari');
+
+    App.hideImage = false;
 
 	Backbone.emulateJSON = true;
 

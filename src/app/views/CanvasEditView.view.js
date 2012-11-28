@@ -30,7 +30,9 @@ App.CanvasEditView = Backbone.View.extend({
 
 		App._layers.bind('add', this.draw, this);
 		App._layers.bind('remove', this.draw, this);
+		App._layers.bind('change', this.draw, this);
 		App._layers.on('changed', this.draw, this);
+		App._layers.on('output', this.makePng, this);
 
 		return this;
 	},
@@ -61,6 +63,17 @@ App.CanvasEditView = Backbone.View.extend({
 
 	draw: function() {
 		this.imageTool.draw();
+		this.imageTool.drawOnscreen();
+	},
+
+	makePng: function() {
+		this.imageTool.draw(this.model.get('_width'),this.model.get('_height'));
+		var basePng = this.imageTool.outputPng();
+		if (!App.isSafari) {
+			window.location.href = basePng.replace('image/png', 'image/octet-stream');
+		} else {
+			console.log(basePng);
+		}
 	},
 
 	createIndicator: function() {

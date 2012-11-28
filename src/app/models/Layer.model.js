@@ -21,6 +21,7 @@ App.Layer = Backbone.Model.extend({
 				radius: 10,
 				hspacing: 0,
 				vspacing: 0,
+				stagger: 0,
 				opacity: 0.6
 			}
 		},

@@ -78,6 +78,8 @@ App.LayerListItemView = Backbone.View.extend({
 		Utils.c.log("Toggled Visible");
 		e.stopPropagation();
 		this.model.toggleVisible();
+		// Utils.c.log("-----------> toggled visible");
+		// App._layers.trigger('changed');
 	},
 
 	moveUp: function(e) {
@@ -86,7 +88,7 @@ App.LayerListItemView = Backbone.View.extend({
 			this.$el.insertBefore(this.$el.prev());
 			App._layers.moveUp(this.model);
 		} else {
-			Utils.c.log("Top o' the list");
+			Utils.c.log("Top o' the list", this.model.get('orderId'), App._layers.pluck('orderId'));
 		}
 	},
 
@@ -96,7 +98,7 @@ App.LayerListItemView = Backbone.View.extend({
 			this.$el.insertAfter(this.$el.next());
 			App._layers.moveDown(this.model);
 		} else {
-			Utils.c.log("Bottom o' the list");
+			Utils.c.log("Bottom o' the list", this.model.get('orderId'), App._layers.pluck('orderId'));
 		}
 	}
 

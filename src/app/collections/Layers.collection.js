@@ -22,13 +22,12 @@ App.Layers = Backbone.Collection.extend({
 	},
 
 	swap: function(first, second) {
-		Utils.c.log(first.get('orderId'), second.get('orderId'));
 		var temp = first.get('orderId');
-		first.set('orderId', second.get('orderId'));
+		first.set('orderId', second.get('orderId'), {silent: true});
 		second.set('orderId', temp);
-		Utils.c.log(first.get('orderId'), second.get('orderId'));
-		this.sort({silent: true});
-		this.trigger('changed');
+		// this.sort({silent: true});
+		// Utils.c.log(this.pluck('orderId'));
+		Utils.c.log("-----------> swapped order");
 	},
 
 	comparator: function(layer) {

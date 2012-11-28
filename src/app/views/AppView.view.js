@@ -15,10 +15,6 @@ App.AppView = Backbone.View.extend({
 		this.render();
 	},
 
-	events: {
-		'click a.createNewLayer': 'makeNewLayer'
-	},
-
 	render: function() {
 		$(this.el).html(JST['main']());
 		Utils.c.log("AppView Rendered");
@@ -27,14 +23,6 @@ App.AppView = Backbone.View.extend({
 		this.layerListOptions.setElement($('#mainMenu')).render();
 
 		this.img.on('img:loaded',this.buildCanvas,this);
-	},
-
-	makeNewLayer: function() {
-		var layer = new App.Layer;
-		App._layers.add(layer);
-		if (App._layers.size() === 1) {
-			App._layers.trigger('selected:layer', layer);
-		}
 	},
 
 	changedLayers: function(layer) {
@@ -48,7 +36,7 @@ App.AppView = Backbone.View.extend({
 	buildCanvas: function() {
 		Utils.c.log("Trigger received. image loaded.");
 		this.canvasView.setElement($('#canvasPane')).render();
-		this.makeNewLayer();
+		this.layerListOptions.makeNewLayer();
 	}
 
 });

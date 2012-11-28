@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     meta: {
-      version: '0.1.0',
+      version: '0.8.0',
       banner: '/*! MosaicTool - v<%= meta.version %> - ' +
         '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
         '* Copyright (c) <%= grunt.template.today("yyyy") %> ' +
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     min: {
       lib: {
         src: ['<banner>','lib/app.js'],
-        dest: 'lib/app.min.js'
+        dest: 'lib/app.js'
       }
     },
     watch: {

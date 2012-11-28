@@ -7,37 +7,26 @@ App.CanvasPaneMenuView = Backbone.View.extend({
 
 	initialize: function() {
 		_.bindAll(this, 'adjustLayer');
-		// Utils.c.log(this.model, App._layers);
-		//
 	},
 
 	render: function(layer) {
 		this.$el.empty();
-		if (layer !== undefined) this.model = layer;
+		this.model = layer;
 		switch (this.model.get('type'))
 		{
 			case 'diamond':
 				this.$el.html(JST['canvas/menu/diamond']({
-					opacity: this.model.get('instructions').diamond.opacity,
-					radius: this.model.get('instructions').diamond.radius,
-					hspacing: this.model.get('instructions').diamond.hspacing,
-					vspacing: this.model.get('instructions').diamond.vspacing
+					instructions: this.model.get('instructions').diamond
 				}));
 				break;
 			case 'circles':
 				this.$el.html(JST['canvas/menu/circles']({
-					opacity: this.model.get('instructions').circles.opacity,
-					radius: this.model.get('instructions').circles.radius,
-					hspacing: this.model.get('instructions').circles.hspacing,
-					vspacing: this.model.get('instructions').circles.vspacing
+					instructions: this.model.get('instructions').circles
 				}));
 				break;
 			case 'squares':
 				this.$el.html(JST['canvas/menu/squares']({
-					opacity: this.model.get('instructions').squares.opacity,
-					radius: this.model.get('instructions').squares.radius,
-					hspacing: this.model.get('instructions').squares.hspacing,
-					vspacing: this.model.get('instructions').squares.vspacing
+					instructions: this.model.get('instructions').squares
 				}));
 				break;
 		}
@@ -51,10 +40,11 @@ App.CanvasPaneMenuView = Backbone.View.extend({
 				type = this.model.get('type');
 		if (prop === "type") {
 			this.model.set('type',val);
+			App._layers.trigger('changed:type', this.model);
 		} else {
 			this.model.get('instructions')[type][prop] = parseFloat(val);
+			App._layers.trigger('changed');
 		}
-		App._layers.trigger('changed');
 	}
 
 });

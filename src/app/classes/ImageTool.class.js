@@ -10,9 +10,10 @@ App.ImageTool = (function() {
 		this.bufferCtx = this.buffer.getContext('2d');
 	}
 
-	ImageTool.prototype.setBuffer = function() {
-		this.buffer.width = this.canvas.width;
-		this.buffer.height = this.canvas.height;
+	ImageTool.prototype.setBuffer = function(width, height) {
+		this.buffer.width = width || this.canvas.width;
+		this.buffer.height = height || this.canvas.height;
+		this.bufferCtx.clearRect(0,0,this.buffer.width,this.buffer.height);
 	}
 
 	ImageTool.prototype.round = function(num) {
@@ -21,12 +22,14 @@ App.ImageTool = (function() {
 		return (0.5 + num) << 0;   
 	}
 
-	ImageTool.prototype.draw = function() {
+	ImageTool.prototype.draw = function(width, height) {
 		Utils.c.log("--> ImageTool Redraw");
-		this.setBuffer();
-		this.bufferCtx.clearRect(0,0,this.buffer.width,this.buffer.height);
-		this.bufferCtx.drawImage(this.image.get('img'),0,0,this.canvas.width, this.canvas.height);		
+		this.setBuffer(width, height);
+		if (!App.hideImage) {
+			this.bufferCtx.drawImage(this.image.get('img'),0,0,this.buffer.width, this.buffer.height);		
+		}
 		var i, j, cenX, cenY, numH, numV, _self = this;
+		Utils.c.log(App._layers.pluck('orderId'));
 		App._layers.each(function(layer) {
 			if (layer.get('visible')) {
 				switch(layer.get('type')) {
@@ -34,8 +37,8 @@ App.ImageTool = (function() {
 						var radius = layer.get('instructions').circles.radius,
 								hs = layer.get('instructions').circles.hspacing,
 								vs = layer.get('instructions').circles.vspacing;
-						numH = _self.canvas.width / (2 * (radius + hs));
-						numV = _self.canvas.height / (2 * (radius + vs));
+						numH = _self.buffer.width / (2 * (radius + hs));
+						numV = _self.buffer.height / (2 * (radius + vs));
 						for (i = 0; i <= numH; i++) {
 							for (j = 0; j <= numV; j++) {
 								cenX = _self.round(radius+2*i*(radius+hs));
@@ -47,13 +50,14 @@ App.ImageTool = (function() {
 					case "squares":
 						var radius = layer.get('instructions').squares.radius,
 								hs = layer.get('instructions').squares.hspacing,
-								vs = layer.get('instructions').squares.vspacing;
-						numH = _self.canvas.width / (radius + hs);
-						numV = _self.canvas.height / (radius + vs);
+								vs = layer.get('instructions').squares.vspacing,
+								stg = layer.get('instructions').squares.stagger;
+						numH = _self.buffer.width / (radius + hs);
+						numV = _self.buffer.height / (radius + vs);
 						for (i = 0; i < numH; i++) {
-							for (j = 0; j < numV; j++) {
+							for (j = 0; j <= numV; j++) {
 								cenX = _self.round(radius/2+i*(radius+hs));
-								cenY = _self.round(radius/2+j*(radius+vs));
+								cenY = _self.round((i % 2 !== 0 ? stg : 0) +radius/2+j*(radius+vs));
 								_self.drawSquare(cenX, cenY, radius, layer.get('instructions').squares.opacity);
 							}
 						}
@@ -62,8 +66,8 @@ App.ImageTool = (function() {
 						var radius = layer.get('instructions').diamond.radius,
 								hs = layer.get('instructions').diamond.hspacing,
 								vs = layer.get('instructions').diamond.vspacing;
-						numH = _self.canvas.width / (radius + hs),
-						numV = _self.canvas.height / (2 * (radius + vs));
+						numH = _self.buffer.width / (radius + hs),
+						numV = _self.buffer.height / (2 * (radius + vs));
 						for (i = 0; i <= numH; i++) {
 							for (j = 0; j <= numV; j++) {
 								cenX = _self.round(i*(radius+hs));
@@ -75,8 +79,15 @@ App.ImageTool = (function() {
 				}
 			}
 		});
+	}
+
+	ImageTool.prototype.drawOnscreen = function() {
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 		this.ctx.drawImage(this.buffer,0,0);
+	}
+
+	ImageTool.prototype.outputPng = function() {
+		return this.buffer.toDataURL('image/png');
 	}
 
 	ImageTool.prototype.drawSquare = function(cenX, cenY, radius, opacity) {
@@ -108,8 +119,8 @@ App.ImageTool = (function() {
 
 	ImageTool.prototype.getChunkColor = function(canvasX, canvasY, alpha) {
 		// TODO customize alpha
-		var relX = Math.floor(canvasX / this.canvas.width * this.image.get('_width')),
-			relY = Math.floor(canvasY / this.canvas.height * this.image.get('_height')),
+		var relX = Math.floor(canvasX / this.buffer.width * this.image.get('_width')),
+			relY = Math.floor(canvasY / this.buffer.height * this.image.get('_height')),
 			red = this.imageData.data[((relY*this.imageData.width*4)+(relX*4))],
 			grn = this.imageData.data[((relY*this.imageData.width*4)+(relX*4))+1],
 			blu = this.imageData.data[((relY*this.imageData.width*4)+(relX*4))+2],
