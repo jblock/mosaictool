@@ -8,19 +8,19 @@ App.ImageTool = (function() {
 
 		this.buffer = document.createElement('canvas');
 		this.bufferCtx = this.buffer.getContext('2d');
-	}
+	};
 
 	ImageTool.prototype.setBuffer = function(width, height) {
 		this.buffer.width = width || this.canvas.width;
 		this.buffer.height = height || this.canvas.height;
 		this.bufferCtx.clearRect(0,0,this.buffer.width,this.buffer.height);
-	}
+	};
 
 	ImageTool.prototype.round = function(num) {
 		var rounded = (0.5 + num) | 0;
 		rounded = ~~ (0.5 + num);
 		return (0.5 + num) << 0;   
-	}
+	};
 
 	ImageTool.prototype.draw = function(width, height) {
 		Utils.c.log("--> ImageTool Redraw");
@@ -28,11 +28,9 @@ App.ImageTool = (function() {
 		if (!App.hideImage) {
 			this.bufferCtx.drawImage(this.image.get('img'),0,0,this.buffer.width, this.buffer.height);		
 		}
-		var arr = [];
 		var i, j, cenX, cenY, numH, numV, layer;
 		for (var k = 0; k < App._layers.models.length; k++) {
 			layer = App._layers.models[k];
-			arr.push(layer.get('name'));
 			if (layer.get('visible')) {
 				switch(layer.get('type')) {
 					case "circles":
@@ -81,17 +79,16 @@ App.ImageTool = (function() {
 				}
 			}
 		}
-		Utils.c.log(arr);
-	}
+	};
 
 	ImageTool.prototype.drawOnscreen = function() {
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 		this.ctx.drawImage(this.buffer,0,0);
-	}
+	};
 
 	ImageTool.prototype.outputPng = function() {
 		return this.buffer.toDataURL('image/png');
-	}
+	};
 
 	ImageTool.prototype.drawSquare = function(cenX, cenY, radius, opacity) {
 		this.bufferCtx.fillStyle = this.getChunkColor(cenX, cenY, opacity);
@@ -99,7 +96,7 @@ App.ImageTool = (function() {
 		this.bufferCtx.fillRect(cenX - radius/2, cenY - radius/2, radius, radius);
 		this.bufferCtx.closePath();
 		this.bufferCtx.fill();
-	}
+	};
 
 	ImageTool.prototype.drawCircle = function(cenX, cenY, radius, opacity) {
 		this.bufferCtx.fillStyle = this.getChunkColor(cenX, cenY, opacity);
@@ -107,7 +104,7 @@ App.ImageTool = (function() {
 		this.bufferCtx.arc(cenX, cenY, radius, 0, Math.PI*2, this);
 		this.bufferCtx.closePath();
 		this.bufferCtx.fill();
-	}
+	};
 
 	ImageTool.prototype.drawDiamond = function(cenX, cenY, radius, opacity) {
 		this.bufferCtx.fillStyle = this.getChunkColor(cenX, cenY, opacity);
@@ -118,7 +115,7 @@ App.ImageTool = (function() {
 		this.bufferCtx.lineTo(cenX - radius, cenY);
 		this.bufferCtx.closePath();
 		this.bufferCtx.fill();
-	}
+	};
 
 	ImageTool.prototype.getChunkColor = function(canvasX, canvasY, alpha) {
 		// TODO customize alpha
@@ -136,7 +133,7 @@ App.ImageTool = (function() {
 		}
 		prefix += '(' + color + ')';
 		return prefix;
-	}
+	};
 
 	return ImageTool;
 

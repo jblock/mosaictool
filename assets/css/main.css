@@ -530,7 +530,9 @@ body {
   vertical-align: middle;
   width: 16px;
   height: 16px;
-  background-size: 16px 16px;
+  background-size: 16px !important;
+  -webkit-background-size: 16px !important;
+  -moz-background-size: 16px !important;
   margin: 4px 12px 4px 4px;
 }
 

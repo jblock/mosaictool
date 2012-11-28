@@ -8,7 +8,7 @@ App.Layers = Backbone.Collection.extend({
 	resetSelected: function() {
 		this.each(function(layer) {
 			layer.set('selected', false);
-		})
+		});
 	},
 
 	swap: function(layer, otherCid) {

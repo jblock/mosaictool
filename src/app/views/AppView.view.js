@@ -4,12 +4,12 @@ App.AppView = Backbone.View.extend({
 	el: "body",
 
 	initialize: function() {
-		this.img = new App.ImageSource;
+		this.img = new App.ImageSource();
 		this.img.bind('change', this.changedImage, this);
 		App._layers.bind('change', this.changedLayers, this);
 
-		this.layerList = new App.LayerListView;
-		this.layerListOptions = new App.LayerListOptionsView;
+		this.layerList = new App.LayerListView();
+		this.layerListOptions = new App.LayerListOptionsView();
 		this.canvasView = new App.CanvasView({model: this.img});
 
 		this.render();

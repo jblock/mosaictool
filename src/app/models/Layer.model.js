@@ -11,8 +11,7 @@ App.Layer = Backbone.Model.extend({
 
 	initialize: function() {
 		var orderId = App._layers.nextOrderId();
-		this.set('instructions', { // Bug. Setting them as defaults doesn't work. 
-															 // Nested attrs is poor practice, anyway
+		this.set('instructions', { // Bug. Setting them as defaults doesn't work. Nested attrs is poor practice, anyway
 			diamond: {
 				radius: 5,
 				hspacing: 0,

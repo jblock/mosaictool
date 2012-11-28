@@ -24,7 +24,7 @@ App.ImageSource = Backbone.Model.extend({
 			});
 
 			_self.trigger('img:loaded');
-		}
+		};
 
 	},
 	

@@ -70,7 +70,6 @@ App.LayerListItemView = Backbone.View.extend({
 	toggleFocus: function(e) {
 		if (!this.model.get('selected')) {
 			App._layers.resetSelected();
-			this.model.setSelected;
 			App._layers.trigger('selected:layer', this.model);
 			this.model.setSelected();
 		} 
