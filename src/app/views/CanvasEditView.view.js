@@ -74,8 +74,8 @@ App.CanvasEditView = Backbone.View.extend({
 	makePng: function() {
 		this.imageTool.draw(this.model.get('_width'),this.model.get('_height'));
 		var basePng = this.imageTool.outputPng();
-		if (!App.isSafari) {
-			window.location.href = basePng.replace('image/png', 'image/octet-stream');
+		if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+			window.open(basePng.replace('image/png', 'image/octet-stream'));
 		} else {
 			alert("Check the console for the PNG string!\nPaste it into a non-safari browser. Safari doesn't like it.");
 			console.log(basePng);
