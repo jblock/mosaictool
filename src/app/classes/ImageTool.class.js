@@ -28,9 +28,9 @@ App.ImageTool = (function() {
 		if (!App.hideImage) {
 			this.bufferCtx.drawImage(this.image.get('img'),0,0,this.buffer.width, this.buffer.height);		
 		}
-		var i, j, cenX, cenY, numH, numV, _self = this;
-		Utils.c.log(App._layers.pluck('orderId'));
-		App._layers.each(function(layer) {
+		var i, j, cenX, cenY, numH, numV, layer, _self = this;
+		for (var k = App._layers.models.length-1; k >= 0; k--) {
+			layer = App._layers.models[k];
 			if (layer.get('visible')) {
 				switch(layer.get('type')) {
 					case "circles":
@@ -78,7 +78,7 @@ App.ImageTool = (function() {
 						break;
 				}
 			}
-		});
+		}
 	}
 
 	ImageTool.prototype.drawOnscreen = function() {

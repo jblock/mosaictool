@@ -72,6 +72,7 @@ App.CanvasEditView = Backbone.View.extend({
 		if (!App.isSafari) {
 			window.location.href = basePng.replace('image/png', 'image/octet-stream');
 		} else {
+			alert("Check the console for the PNG string!\nPaste it into a non-safari browser. Safari doesn't like it.");
 			console.log(basePng);
 		}
 	},

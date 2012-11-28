@@ -1,7 +1,7 @@
 App.ImageSource = Backbone.Model.extend({
 	defaults: {
 		img: null,
-		src: "../assets/images/edinburgh.jpg",
+		src: "../assets/images/hugo.jpg",
 		_width: 0,
 		_height: 0,
 		_ratio: 1,

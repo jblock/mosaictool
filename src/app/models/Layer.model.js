@@ -48,6 +48,10 @@ App.Layer = Backbone.Model.extend({
 
 	toggleVisible: function() {
 		this.set('visible', !this.get('visible'));
+	},
+
+	setSelected: function() {
+		this.set('selected', true);
 	}
 
 });

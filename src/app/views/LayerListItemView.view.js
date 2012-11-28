@@ -22,6 +22,7 @@ App.LayerListItemView = Backbone.View.extend({
 		$(this.el).html(JST['layers/layer']({
 			name: this.model.get('name')
 		}));
+		this.$el.attr('data-cid', this.model.cid);
 		this.updateDisplay();
 		return this;
 	},
@@ -68,9 +69,10 @@ App.LayerListItemView = Backbone.View.extend({
 
 	toggleFocus: function(e) {
 		if (!this.model.get('selected')) {
-			App._layers.resetSelected(); // TODO chain this call
-			this.model.set('selected', true);
+			App._layers.resetSelected();
+			this.model.setSelected;
 			App._layers.trigger('selected:layer', this.model);
+			this.model.setSelected();
 		} 
 	},
 
@@ -78,15 +80,13 @@ App.LayerListItemView = Backbone.View.extend({
 		Utils.c.log("Toggled Visible");
 		e.stopPropagation();
 		this.model.toggleVisible();
-		// Utils.c.log("-----------> toggled visible");
-		// App._layers.trigger('changed');
 	},
 
 	moveUp: function(e) {
 		e.stopPropagation();
 		if (this.model !== App._layers.last()) {
+			App._layers.swap(this.model, this.$el.prev().data('cid'));
 			this.$el.insertBefore(this.$el.prev());
-			App._layers.moveUp(this.model);
 		} else {
 			Utils.c.log("Top o' the list", this.model.get('orderId'), App._layers.pluck('orderId'));
 		}
@@ -95,8 +95,8 @@ App.LayerListItemView = Backbone.View.extend({
 	moveDown: function(e) {
 		e.stopPropagation();
 		if (this.model !== App._layers.first()) {
+			App._layers.swap(this.model, this.$el.next().data('cid'));
 			this.$el.insertAfter(this.$el.next());
-			App._layers.moveDown(this.model);
 		} else {
 			Utils.c.log("Bottom o' the list", this.model.get('orderId'), App._layers.pluck('orderId'));
 		}

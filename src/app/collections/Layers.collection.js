@@ -11,23 +11,10 @@ App.Layers = Backbone.Collection.extend({
 		})
 	},
 
-	moveUp: function(layer) {
-		var curIndex = this.indexOf(layer);
-		this.swap(layer, this.at(curIndex+1));
-	},
-
-	moveDown: function(layer) {
-		var curIndex = this.indexOf(layer);
-		this.swap(layer, this.at(curIndex-1));
-	},
-
-	swap: function(first, second) {
-		var temp = first.get('orderId');
-		first.set('orderId', second.get('orderId'), {silent: true});
-		second.set('orderId', temp);
-		// this.sort({silent: true});
-		// Utils.c.log(this.pluck('orderId'));
+	swap: function(layer, otherCid) {
+		this.move(layer, this.indexOf(this.getByCid(otherCid)));
 		Utils.c.log("-----------> swapped order");
+		Utils.c.log("-->", this.pluck('name'));
 	},
 
 	comparator: function(layer) {

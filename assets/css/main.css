@@ -539,7 +539,7 @@ body {
   position: absolute;
   left: 24px;
   top: 24px;
-  opacity: 0;
+  opacity: 0.1;
   padding: 12px;
   color: white;
   z-index: 10000;
@@ -561,6 +561,23 @@ body {
 
 .paramGroup label, .paramGroup input {
   display: block;
+}
+
+.paramGroup label {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.paramGroup input {
+  padding: 4px;
+  background: black;
+  color: white;
+  border: 1px solid #bbb;
+}
+
+.paramGroup input:focus {
+  outline:; none;
+  border: 1px solid white;
 }
 
 #rightPane:hover #canvasMenu {
