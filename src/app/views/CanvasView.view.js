@@ -1,14 +1,11 @@
 App.CanvasView = Backbone.View.extend({
 
-	// id: 'canvasPane',
-
 	initialize: function() {
 		Utils.c.log('initialized CanvasView');
 		_.bindAll(this, 'makeMenu');
 		App._layers.on('selected:layer changed:type', this.makeMenu);
 		this.menu = new App.CanvasPaneMenuView();;
 		this.edit = new App.CanvasEditView({model: this.model});
-		// this.render();
 	},
 
 	render: function() {

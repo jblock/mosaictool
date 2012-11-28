@@ -478,7 +478,10 @@ body {
 }
 
 #layers {
-
+  overflow-y: scroll;
+  padding: 4px 6px;
+  max-height: 300px;
+  box-sizing: border-box;
 }
 
 .layer {
@@ -512,6 +515,7 @@ body {
   padding: 4px 4px 4px 12px;
   line-height: 16px;
   height: 16px;
+  margin-left: 8px;
   border-left: 1px solid #2b2b2b;
   -webkit-transition: all .05s ease-in-out;
 
@@ -533,7 +537,11 @@ body {
   background-size: 16px !important;
   -webkit-background-size: 16px !important;
   -moz-background-size: 16px !important;
-  margin: 4px 12px 4px 4px;
+  margin: 4px 2px;
+}
+
+.layerButton:hover {
+  background-color: rgba(255,255,255,.1);
 }
 
 #canvasMenu {

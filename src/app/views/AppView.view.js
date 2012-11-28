@@ -25,14 +25,6 @@ App.AppView = Backbone.View.extend({
 		this.img.on('img:loaded',this.buildCanvas,this);
 	},
 
-	changedLayers: function(layer) {
-		// Utils.c.log(App._layers.getSelected());
-	},
-
-	changedImage: function(imageSource) {
-
-	},
-
 	buildCanvas: function() {
 		Utils.c.log("Trigger received. image loaded.");
 		this.canvasView.setElement($('#canvasPane')).render();

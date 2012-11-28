@@ -118,7 +118,6 @@ App.ImageTool = (function() {
 	};
 
 	ImageTool.prototype.getChunkColor = function(canvasX, canvasY, alpha) {
-		// TODO customize alpha
 		var relX = Math.floor(canvasX / this.buffer.width * this.image.get('_width')),
 			relY = Math.floor(canvasY / this.buffer.height * this.image.get('_height')),
 			red = this.imageData.data[((relY*this.imageData.width*4)+(relX*4))],
