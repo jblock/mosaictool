@@ -48,10 +48,15 @@ App.CanvasEditView = Backbone.View.extend({
 		} 
 		this.canvasHeight = Math.min(this.canvasWidth / this.model.get('_ratio'), this.canvasHeight);
 
-		this.imageSource.attr({
-			'width': this.canvasWidth,
-			'height': this.canvasHeight
-		});
+		this.imageSource
+			.attr({
+				'width': this.canvasWidth,
+				'height': this.canvasHeight
+			})
+			.css({
+				'marginTop': 0.5*(this.$el.height()-this.canvasHeight),
+				'marginLeft': 0.5*(this.$el.width()-this.canvasWidth)
+			});
 
 		this.draw();
 	},

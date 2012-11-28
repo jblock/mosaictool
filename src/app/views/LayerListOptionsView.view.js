@@ -1,14 +1,9 @@
 App.LayerListOptionsView = Backbone.View.extend({
 
-	// id: 'mainMenu',
 	events: {
 		'click a.createNewLayer': 'makeNewLayer',
 		'click a.hideImg': 'hideImg',
 		'click a.outputPng': 'outputPng'
-	},
-
-	initialize: function() {
-		// this.render();
 	},
 
 	render: function() {
@@ -26,7 +21,6 @@ App.LayerListOptionsView = Backbone.View.extend({
 
 	hideImg: function() {
 		App.hideImage = !App.hideImage;
-		Utils.c.log(App.hideImage);
 		App._layers.trigger('changed');
 	},
 

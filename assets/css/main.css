@@ -413,6 +413,10 @@ table {
   margin-bottom: 4px;
 }
 
+.btn.createNewLayer {
+  background: #26AF4F;
+}
+
 .btn:active {
   background: rgba(165,202,216,.4);
   box-shadow: inset 0 0 3px rgba(0,0,0,.9);
@@ -592,13 +596,6 @@ body {
   position: relative;
 }
 
-#shapeCanvas {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 9999;
-}
-
 #imageSource {
   position: absolute;
   left: 0;
@@ -606,6 +603,7 @@ body {
   z-index: 4;
 /*  width: 100%;
   height: 100%;*/
+  box-shadow: 0 2px 5px black;
 }
 
 .deleteLayer {

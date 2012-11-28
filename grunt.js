@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     },
     concat: {
       lib: {
-        src: ['<config:lint.files>'],
+        src: ['<banner>','<config:lint.files>'],
         dest: 'lib/app.js'
       }
     },
@@ -33,6 +33,7 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', 'concat');
-  grunt.registerTask('prod', 'concat min');
+  grunt.registerTask('build-development', 'concat');
+  grunt.registerTask('build-production', 'concat min');
 
 };

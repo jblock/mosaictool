@@ -4,42 +4,48 @@ App.Layer = Backbone.Model.extend({
 		name: "New Layer",
 		orderId: 0,
 		type: 'squares',
-		instructions: {
-			diamond: {
-				radius: 5,
-				hspacing: 0,
-				vspacing: 0,
-				opacity: 0.6
-			},
-			circles: {
-				radius: 5,
-				hspacing: 0,
-				vspacing: 0,
-				opacity: 0.6
-			},
-			squares: {
-				radius: 10,
-				hspacing: 0,
-				vspacing: 0,
-				stagger: 0,
-				opacity: 0.6
-			}
-		},
+		instructions: {},
 		selected: false,
 		visible: false
 	},
 
 	initialize: function() {
 		var orderId = App._layers.nextOrderId();
+		this.set('instructions', { // Bug. Setting them as defaults doesn't work. 
+															 // Nested attrs is poor practice, anyway
+			diamond: {
+				radius: 5,
+				hspacing: 0,
+				vspacing: 0,
+				opacity: 0.2
+			},
+			circles: {
+				radius: 5,
+				hspacing: 0,
+				vspacing: 0,
+				opacity: 0.4
+			},
+			squares: {
+				radius: 10,
+				hspacing: 0,
+				vspacing: 0,
+				stagger: 0,
+				opacity: 1.0
+			}
 
+		});
 		this.set('orderId', orderId);
-		this.set('name', "Layer "+this.get('orderId'));
+		this.set('name', "Layer "+orderId);
+		this.set('type', Math.random() > 0.5 ? 'circles' : 'squares');
 
 		if (orderId === 1) {
-			this.set('selected', true);
-			this.set('visible', true);
+			this.toggleVisible();
+			this.setSelected();
 		}
+	},
 
+	notice: function(model, changed) {
+		Utils.c.log(changed, "----> MODEL CHANGED!!!!!!!!!!!");
 	},
 
 	clear: function() {

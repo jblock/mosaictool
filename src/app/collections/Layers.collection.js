@@ -13,6 +13,7 @@ App.Layers = Backbone.Collection.extend({
 
 	swap: function(layer, otherCid) {
 		this.move(layer, this.indexOf(this.getByCid(otherCid)));
+		this.trigger('changed');
 		Utils.c.log("-----------> swapped order");
 		Utils.c.log("-->", this.pluck('name'));
 	},

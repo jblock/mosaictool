@@ -30,7 +30,7 @@ App.CanvasPaneMenuView = Backbone.View.extend({
 				}));
 				break;
 		}
-		Utils.c.log("rendered menu");
+		Utils.c.log("rendered menu: ", this.model.get('name'));
 		return this;
 	},
 
@@ -38,7 +38,7 @@ App.CanvasPaneMenuView = Backbone.View.extend({
 		var prop = e.target.id, 
 				val = ($(e.target).val()), 
 				type = this.model.get('type');
-		Utils.c.log("CHANGED: ", this.model.get('name'), "Visible: ",this.model.get('visible'), prop, val)
+		Utils.c.log("CHANGED: ", this.model.cid, this.model.get('name'), "Visible: ",this.model.get('visible'), prop, val)
 		if (prop === "type") {
 			this.model.set('type',val);
 			App._layers.trigger('changed:type', this.model);
