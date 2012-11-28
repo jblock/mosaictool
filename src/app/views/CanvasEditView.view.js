@@ -30,7 +30,7 @@ App.CanvasEditView = Backbone.View.extend({
 
 		App._layers.bind('add', this.draw, this);
 		App._layers.bind('remove', this.draw, this);
-		App._layers.bind('change', this.draw, this);
+		App._layers.on('changed', this.draw, this);
 
 		return this;
 	},

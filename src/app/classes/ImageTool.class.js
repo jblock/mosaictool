@@ -32,28 +32,38 @@ App.ImageTool = (function() {
 				switch(layer.get('type')) {
 					case "circles":
 						var radius = layer.get('instructions').circles.radius,
-								hs = layer.get('instructions').circles.spacing.horizontal,
-								vs = layer.get('instructions').circles.spacing.vertical;
+								hs = layer.get('instructions').circles.hspacing,
+								vs = layer.get('instructions').circles.vspacing;
 						numH = _self.canvas.width / (2 * (radius + hs));
 						numV = _self.canvas.height / (2 * (radius + vs));
 						for (i = 0; i <= numH; i++) {
 							for (j = 0; j <= numV; j++) {
-								cenX = _self.round(2*i*(radius+hs));
+								cenX = _self.round(radius+2*i*(radius+hs));
 								cenY = _self.round((i % 2 === 0 ? radius : 0)+2*j*(radius+vs));
 								_self.drawCircle(cenX, cenY, radius, layer.get('instructions').circles.opacity);
 							}
 						}
 						break;
 					case "squares":
-
+						var radius = layer.get('instructions').squares.radius,
+								hs = layer.get('instructions').squares.hspacing,
+								vs = layer.get('instructions').squares.vspacing;
+						numH = _self.canvas.width / (radius + hs);
+						numV = _self.canvas.height / (radius + vs);
+						for (i = 0; i < numH; i++) {
+							for (j = 0; j < numV; j++) {
+								cenX = _self.round(radius/2+i*(radius+hs));
+								cenY = _self.round(radius/2+j*(radius+vs));
+								_self.drawSquare(cenX, cenY, radius, layer.get('instructions').squares.opacity);
+							}
+						}
 					break;
 					case "diamond":
 						var radius = layer.get('instructions').diamond.radius,
-								hs = layer.get('instructions').diamond.spacing.horizontal,
-								vs = layer.get('instructions').diamond.spacing.vertical;
+								hs = layer.get('instructions').diamond.hspacing,
+								vs = layer.get('instructions').diamond.vspacing;
 						numH = _self.canvas.width / (radius + hs),
 						numV = _self.canvas.height / (2 * (radius + vs));
-
 						for (i = 0; i <= numH; i++) {
 							for (j = 0; j <= numV; j++) {
 								cenX = _self.round(i*(radius+hs));
@@ -61,13 +71,20 @@ App.ImageTool = (function() {
 								_self.drawDiamond(cenX, cenY, radius, layer.get('instructions').diamond.opacity);
 							}
 						}
-
 						break;
 				}
 			}
 		});
 		this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
 		this.ctx.drawImage(this.buffer,0,0);
+	}
+
+	ImageTool.prototype.drawSquare = function(cenX, cenY, radius, opacity) {
+		this.bufferCtx.fillStyle = this.getChunkColor(cenX, cenY, opacity);
+		this.bufferCtx.beginPath();
+		this.bufferCtx.fillRect(cenX - radius/2, cenY - radius/2, radius, radius);
+		this.bufferCtx.closePath();
+		this.bufferCtx.fill();
 	}
 
 	ImageTool.prototype.drawCircle = function(cenX, cenY, radius, opacity) {

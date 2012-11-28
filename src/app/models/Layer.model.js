@@ -3,36 +3,29 @@ App.Layer = Backbone.Model.extend({
 	defaults: {
 		name: "New Layer",
 		orderId: 0,
-		type: 'diamond',
+		type: 'squares',
 		instructions: {
 			diamond: {
 				radius: 5,
-				spacing: {
-					horizontal: 0,
-					vertical: 0
-				},
+				hspacing: 0,
+				vspacing: 0,
 				opacity: 0.6
 			},
 			circles: {
 				radius: 5,
-				spacing: {
-					horizontal: 0,
-					vertical: 0
-				},
-				opacity: 1
+				hspacing: 0,
+				vspacing: 0,
+				opacity: 0.6
 			},
 			squares: {
-				side: 10,
-				spacing: {
-					horizontal: 0,
-					vertical: 0
-				},
-				stagger: 0,
-				opacity: 1.0
+				radius: 10,
+				hspacing: 0,
+				vspacing: 0,
+				opacity: 0.6
 			}
 		},
 		selected: false,
-		visible: true
+		visible: false
 	},
 
 	initialize: function() {
@@ -43,6 +36,7 @@ App.Layer = Backbone.Model.extend({
 
 		if (orderId === 1) {
 			this.set('selected', true);
+			this.set('visible', true);
 		}
 
 	},
