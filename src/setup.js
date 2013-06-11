@@ -17,6 +17,7 @@ Backbone.Collection.prototype.move = function(model, toIndex) {
 $(function() {
 
     App.DEBUG = false;
+    App.DOC_ROOT = "/projects/mosaictool/";
 
     if (App.DEBUG) {
         Utils.c = window.console || {};

@@ -1,7 +1,7 @@
 App.ImageSource = Backbone.Model.extend({
 	defaults: {
 		img: null,
-		src: "../assets/images/2001.jpg",
+		src: "/projects/mosaictool/assets/images/2001.jpg",
 		_width: 0,
 		_height: 0,
 		_ratio: 1,
@@ -12,7 +12,7 @@ App.ImageSource = Backbone.Model.extend({
 		Utils.c.log("initializing image");
 		var _self = this, imgChoices = ['2001.jpg', 'hugo.jpg', 'edinburgh.jpg', 'etv.jpg', '2001-2.jpg'];
 		this.set('img', new Image());
-		this.set('src', '../assets/images/'+imgChoices[Math.floor(Math.random()*imgChoices.length)])
+		this.set('src', 'assets/images/'+imgChoices[Math.floor(Math.random()*imgChoices.length)])
 		if (url !== undefined) this.set('src', url);
 		this.get('img').src = this.get('src');
 		this.get('img').onload = function() {
